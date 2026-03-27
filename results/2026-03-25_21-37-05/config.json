@@ -1,1 +1,0 @@
-{"dataset_path": "df_clean.csv", "ml_method": "log_reg", "action": "model_evaluation", "knn_n_neighbors": 5, "cv_nsplits": 5, "save_dir": "results"}
