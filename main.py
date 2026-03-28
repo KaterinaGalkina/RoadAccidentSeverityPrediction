@@ -26,9 +26,9 @@ from imblearn.pipeline import Pipeline as ImbPipeline
 # python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" GradientBoosting
 
 # ONLY with THE BEST model: test on test set
-# python3 main.py model_evaluation --dataset_path="df_clean.csv" --save_dir="results" --load_model_path="results/log_reg-hpt-us-2026-03-27_12-54-09/model.pkl"
+# python3 main.py model_evaluation --dataset_path="df_clean.csv" --save_dir="results" --load_model_path="results/RandomForest-hpt-os-2026-03-27_17-03-59/model.pkl"
 
-# Arguments
+# Arguments 
 parser = argparse.ArgumentParser(
     prog="25/26 ML Project Group: Nerdjes Ahdad and Ekaterina Galkina",
     description="ML Project (2025/2026 M1 IDD): road accident severity prediciton"
@@ -398,3 +398,6 @@ else:
     # Save model
     with open(path_model, 'wb') as f:
         pickle.dump({"pipeline": pipeline}, f)
+
+# Sound notification once finished
+os.system('afplay /System/Library/Sounds/Glass.aiff')
