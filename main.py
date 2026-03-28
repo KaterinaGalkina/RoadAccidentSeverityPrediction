@@ -19,14 +19,14 @@ from imblearn.under_sampling import RandomUnderSampler
 from imblearn.over_sampling import RandomOverSampler
 from imblearn.pipeline import Pipeline as ImbPipeline
 
-# python3 main.py model_training --dataset_path="df_clean.csv" --save_dir="results" log_reg
+# python3 main.py model_training --dataset_path="df_clean.csv" --save_dir="results" LogisticRegression
 
-# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" log_reg
+# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" LogisticRegression
 # python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" RandomForest
 # python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" GradientBoosting
 
 # ONLY with THE BEST model: test on test set
-# python3 main.py model_evaluation --dataset_path="df_clean.csv" --save_dir="results" --load_model_path="results/RandomForest-hpt-os-2026-03-27_17-03-59/model.pkl"
+# python3 main.py model_evaluation --dataset_path="df_clean.csv" --save_dir="results" --load_model_path="models/RandomForest-hpt-os-2026-03-27_17-03-59/model.pkl"
 
 # Arguments 
 parser = argparse.ArgumentParser(
@@ -48,11 +48,11 @@ train_parser.add_argument("--sample", type=str, default="passthrough",
                           choices=["passthrough", "undersampling", "oversampling"],
                           help="Sampling strategy to handle class imbalance")
 
-# Subparsers for each ML method - "log_reg", "RandomForest", "GradientBoosting"
+# Subparsers for each ML method - "LogisticRegression", "RandomForest", "GradientBoosting"
 train_subparsers = train_parser.add_subparsers(dest="ml_method", required=True, help="ML model to use")
 
 # Logistic Regression
-logreg_parser = train_subparsers.add_parser("log_reg", help="Train Logistic Regression")
+logreg_parser = train_subparsers.add_parser("LogisticRegression", help="Train Logistic Regression")
 logreg_parser.add_argument("--C", type=float, nargs=None, default=0.1, choices=[0.01, 0.1, 1, 10, 100])
 logreg_parser.add_argument("--penalty", type=str, nargs=None, default="l2", choices=["l1", "l2"])
 logreg_parser.add_argument("--class_weight", type=str, nargs=None, default=None, choices=[None, "balanced"])
@@ -73,7 +73,7 @@ tune_parser = subparsers.add_parser("hyper_parameter_tuning", parents=[common_pa
 tune_parser.add_argument("--sample", type=str, default="passthrough", choices=["passthrough", "undersampling", "oversampling"], help="Sampling strategy to handle class imbalance")
 tune_parser.add_argument("--cv_nsplits", type=int, default=5, help="Number of CV folds")
 tune_subparsers = tune_parser.add_subparsers(dest="ml_method", required=True, help="ML model to use")
-tune_subparsers.add_parser("log_reg", help="Tune Logistic Regression")
+tune_subparsers.add_parser("LogisticRegression", help="Tune Logistic Regression")
 tune_subparsers.add_parser("RandomForest", help="Tune Random Forest")
 tune_subparsers.add_parser("GradientBoosting", help="Tune Gradient Boosting")
 
@@ -90,7 +90,7 @@ act = "me" if args.action == "model_evaluation" else "hpt" if args.action == "hy
 
 if args.action == "model_evaluation":
     model_folder = os.path.basename(os.path.dirname(args.load_model_path))
-    txt_prefix = model_folder.split("-")[0]
+    txt_prefix = "-".join([model_folder.split("-")[0], model_folder.split("-")[2]])
     dir_name = f"{txt_prefix}-{act}-{time}"
 else:
     samp = "us" if args.sample == "undersampling" else "os" if args.sample == "oversampling" else "pass"
@@ -157,7 +157,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Build the model - when we are evaluating a model we are not training it so we necessarly retrieve an existing one
 if args.action != "model_evaluation":
     MODELS = {
-        "log_reg": LogisticRegression(max_iter=1000, solver="saga", random_state=20),
+        "LogisticRegression": LogisticRegression(max_iter=1000, solver="saga", random_state=20),
         "RandomForest": RandomForestClassifier(random_state=20, n_jobs=-1),
         "GradientBoosting": GradientBoostingClassifier(random_state=20)
     }
@@ -194,7 +194,7 @@ if args.action == "model_training":
     pipeline.fit(X_train, y_train)
 
 elif args.action == "hyper_parameter_tuning":
-    if args.ml_method == "log_reg":
+    if args.ml_method == "LogisticRegression":
         param_grid = {
             "model__C": [0.01, 0.1, 1, 10, 100],
             "model__penalty": ["l1", "l2"],
@@ -271,7 +271,7 @@ def recover_original_feature(feature_name):
     return feature_name
 
 # analyser les coefficients selon le model and we are not evaluating the final model
-if args.action != "model_evaluation" and args.ml_method == "log_reg": 
+if args.action != "model_evaluation" and args.ml_method == "LogisticRegression": 
     feature_names = pipeline.named_steps['preprocess'].get_feature_names_out()
     coefficients = pipeline.named_steps['model'].coef_[0]  # contribution to class 1
 
