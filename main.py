@@ -9,7 +9,7 @@ from time import gmtime, strftime
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
-from sklearn.metrics import ConfusionMatrixDisplay, auc, classification_report, confusion_matrix, roc_curve
+from sklearn.metrics import ConfusionMatrixDisplay, auc, classification_report, confusion_matrix, roc_auc_score, roc_curve
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
@@ -21,9 +21,9 @@ from imblearn.pipeline import Pipeline as ImbPipeline
 
 # python3 main.py model_training --dataset_path="df_clean.csv" --save_dir="results" LogisticRegression
 
-# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" LogisticRegression
-# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" RandomForest
-# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" GradientBoosting
+# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="models" --sample="undersampling" LogisticRegression
+# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="models" --sample="undersampling" RandomForest
+# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="models" --sample="undersampling" GradientBoosting
 
 # to test the model: test on test set
 # python3 main.py model_evaluation --dataset_path="df_clean.csv" --save_dir="results" --load_model_path="models/GradientBoosting-hpt-pass-2026-03-28_05-01-57/model.pkl"
@@ -146,7 +146,7 @@ cat_features = categorical_features_usagers + categorical_features_caract + cate
 bin_features = binary_features_usagers + binary_features_caract
 
 features = num_features + cat_features + bin_features
-target = "grav_bin"
+target = "grav"
 
 X = df[features]
 y = df[target]
@@ -218,6 +218,7 @@ elif args.action == "hyper_parameter_tuning":
         "recall": "recall",
         "roc_auc": "roc_auc"
     }
+
     grid = GridSearchCV(
         estimator=pipeline,
         param_grid=param_grid,
@@ -364,6 +365,7 @@ if args.action == "model_evaluation":
     plt.legend()
     plt.savefig(os.path.join(plots_dir, "roc_curve.png"))
     plt.close()
+
 else:
     # Evaluation of the model on the train set - we don't touch yet the test split
     y_pred = pipeline.predict(X_train)
