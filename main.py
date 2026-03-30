@@ -146,7 +146,7 @@ cat_features = categorical_features_usagers + categorical_features_caract + cate
 bin_features = binary_features_usagers + binary_features_caract
 
 features = num_features + cat_features + bin_features
-target = "grav"
+target = "grav_bin"
 
 X = df[features]
 y = df[target]
