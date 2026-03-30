@@ -1,2 +1,3 @@
 df_clean.csv
 models/**/model.pkl
+gen_models.sh

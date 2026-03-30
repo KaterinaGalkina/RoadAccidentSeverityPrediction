@@ -182,9 +182,9 @@ if args.action != "model_evaluation":
 
     sampler = "passthrough"
     if args.sample == "undersampling":
-        sampler = RandomUnderSampler(random_state=42)
+        sampler = RandomUnderSampler(random_state=20)
     elif args.sample == "oversampling":
-        sampler = RandomOverSampler(random_state=42)
+        sampler = RandomOverSampler(random_state=20)
 
     # Build the pipeline
     pipeline = ImbPipeline([("preprocess", preprocessor),("sample", sampler),("model", model)])
