@@ -25,8 +25,8 @@ from imblearn.pipeline import Pipeline as ImbPipeline
 # python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" RandomForest
 # python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="results" --sample="undersampling" GradientBoosting
 
-# ONLY with THE BEST model: test on test set
-# python3 main.py model_evaluation --dataset_path="df_clean.csv" --save_dir="results" --load_model_path="models/RandomForest-hpt-os-2026-03-27_17-03-59/model.pkl"
+# to test the model: test on test set
+# python3 main.py model_evaluation --dataset_path="df_clean.csv" --save_dir="results" --load_model_path="models/GradientBoosting-hpt-pass-2026-03-28_05-01-57/model.pkl"
 
 # Arguments 
 parser = argparse.ArgumentParser(
@@ -223,7 +223,7 @@ elif args.action == "hyper_parameter_tuning":
         param_grid=param_grid,
         scoring=scoring,
         refit="f1",
-        cv=StratifiedKFold(n_splits=args.cv_nsplits, shuffle=True, random_state=42),
+        cv=StratifiedKFold(n_splits=args.cv_nsplits, shuffle=True, random_state=20),
         n_jobs=-1,
         verbose=2
     )
