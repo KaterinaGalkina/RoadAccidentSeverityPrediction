@@ -1,8 +1,0 @@
-{
-    "best_parameters": {
-        "model__class_weight": null,
-        "model__max_depth": null,
-        "model__n_estimators": 200
-    },
-    "best_cv_f1": 0.5908033108254317
-}

@@ -1,0 +1,8 @@
+{
+    "best_parameters": {
+        "model__C": 1,
+        "model__class_weight": null,
+        "model__penalty": "l1"
+    },
+    "best_cv_f1": 0.5317431551205628
+}
