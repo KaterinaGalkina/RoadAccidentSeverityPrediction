@@ -9,7 +9,7 @@ from time import gmtime, strftime
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
-from sklearn.metrics import ConfusionMatrixDisplay, auc, classification_report, confusion_matrix, roc_auc_score, roc_curve
+from sklearn.metrics import ConfusionMatrixDisplay, auc, classification_report, confusion_matrix, roc_curve
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
