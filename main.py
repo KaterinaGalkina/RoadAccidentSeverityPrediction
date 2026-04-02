@@ -21,6 +21,8 @@ from imblearn.pipeline import Pipeline as ImbPipeline
 
 # python3 main.py model_training --dataset_path="data_clean/df_clean.csv" --save_dir="results" LogisticRegression
 
+# python3 main.py model_training --dataset_path="data_clean/df_clean.csv" --save_dir="test" RandomForest --sample="undersampling"
+
 # python3 main.py hyper_parameter_tuning --dataset_path="data_clean/df_clean.csv" --save_dir="models" --sample="undersampling" LogisticRegression
 
 # python3 main.py model_evaluation --dataset_path="data_clean/df_clean.csv" --save_dir="results" --load_model_path="models/GradientBoosting-hpt-os-2026-03-31_18-58-54/model.pkl"
