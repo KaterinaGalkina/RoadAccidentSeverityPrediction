@@ -19,14 +19,11 @@ from imblearn.under_sampling import RandomUnderSampler
 from imblearn.over_sampling import RandomOverSampler
 from imblearn.pipeline import Pipeline as ImbPipeline
 
-# python3 main.py model_training --dataset_path="df_clean.csv" --save_dir="results" LogisticRegression
+# python3 main.py model_training --dataset_path="data_clean/df_clean.csv" --save_dir="results" LogisticRegression
 
-# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="models" --sample="undersampling" LogisticRegression
-# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="models" --sample="undersampling" RandomForest
-# python3 main.py hyper_parameter_tuning --dataset_path="df_clean.csv" --save_dir="models" --sample="undersampling" GradientBoosting
+# python3 main.py hyper_parameter_tuning --dataset_path="data_clean/df_clean.csv" --save_dir="models" --sample="undersampling" LogisticRegression
 
-# to test the model: test on test set
-# python3 main.py model_evaluation --dataset_path="df_clean.csv" --save_dir="results" --load_model_path="models/GradientBoosting-hpt-pass-2026-03-28_05-01-57/model.pkl"
+# python3 main.py model_evaluation --dataset_path="data_clean/df_clean.csv" --save_dir="results" --load_model_path="models/GradientBoosting-hpt-pass-2026-03-28_05-01-57/model.pkl"
 
 # Arguments 
 parser = argparse.ArgumentParser(
