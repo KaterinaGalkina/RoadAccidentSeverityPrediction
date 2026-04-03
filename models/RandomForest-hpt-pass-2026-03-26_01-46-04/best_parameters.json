@@ -1,0 +1,8 @@
+{
+    "best_parameters": {
+        "model__class_weight": "balanced",
+        "model__max_depth": 10,
+        "model__n_estimators": 100
+    },
+    "best_cv_f1": 0.5531701727105347
+}
